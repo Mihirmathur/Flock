@@ -10,10 +10,11 @@
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-elements": "^0.11.2",
+    "react-native-facebook-login": "^1.5.0",
     "react-native-maps": "^0.15.0",
+    "react-native-timeago": "^0.3.0",
     "react-native-vector-icons": "^4.1.1",
-    "react-navigation": "^1.0.0-beta.9",
-    "react-native-facebook-login": "^1.5.0"
+    "react-navigation": "^1.0.0-beta.9"
   },
   "devDependencies": {
     "babel-jest": "20.0.0",

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Button, FormLabel, FormInput, FormValidationMessage, Card, ListItem } from 'react-native-elements';
-
+import TimeAgo from 'react-native-timeago';  
 import {
     AppRegistry,
     StyleSheet,
@@ -70,12 +70,16 @@ export default class LoggedIn_landing extends React.Component {
   
 <ScrollView>
 
-{this.state.posts.map(function(post, i) {
+{this.state.posts.reverse().map(function(post, i) {
   return (
-    <Card title='Event 1'>
+    <Card title={post.Title}>
       <Text style={{marginBottom: 10}}>
-        {post.Title}
+        Location: {post.Location}
       </Text>
+      <Text style={{marginBottom: 10}}>
+        {post.Description}
+      </Text>
+      <TimeAgo time={post.Time_created} />
       <Button backgroundColor='#03A9F4' 
        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
       title='Join this Flock!' 
