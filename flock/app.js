@@ -65,6 +65,7 @@ class HomeScreen extends React.Component {
           })
         }).then((response) => response.json())
         .then((responseJson) => {
+          console.log(responseJson);
           return responseJson;
         })
         .catch((error) => {

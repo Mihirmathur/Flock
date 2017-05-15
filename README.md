@@ -10,7 +10,12 @@ Run instructions:
 
 Modify Instructions:
 - Landing page is loaded by app.js
-- Different views will go in the views folder. 
+- Different views will go in the views folder.
+
+To Debug:
+- Press Cmd + D on the simulator -> Remote JS Debug
+- Go to: http://localhost:8081/debugger-ui 
+- Look at the console logs for responses and requests.
 
 # Navigation/Routing
 https://reactnavigation.org/docs/intro/
