@@ -23,7 +23,20 @@ export default class LoggedIn_landing extends React.Component {
       const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-            <Text style={{marginTop: 10}}>Join a flock!</Text>
+            
+            <Button backgroundColor='#0355F5' 
+   buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
+  title='Profile Page' 
+  onPress={()=>navigate('ProfileView')}
+  />
+
+  <Button backgroundColor='#0355F5' 
+   buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
+  title= 'Start Flock' 
+  onPress={()=>navigate('CreateFlockView')}
+  />
+
+  <Text style={{marginTop: 10}}>Join a flock!</Text>
   
 <ScrollView>
 

@@ -14,13 +14,14 @@ import {
 import {styles} from './views/styles';
 import LoggedIn_landing from './views/loggedin_landing'
 import Maps from './views/maps'
+import Profile from './views/Profile'
+import CreateFlock from './views/CreateFlock'
 
 //Home Screen
 class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = { 
     email: 'defaultemail@gmail.com', 
     password: 'defaultpw', 
@@ -83,7 +84,9 @@ class HomeScreen extends React.Component {
   const flock = StackNavigator({
     Home: { screen: HomeScreen },
     LoggedIn: { screen: LoggedIn_landing },
-    MapView: {screen: Maps}
+    MapView: {screen: Maps},
+    ProfileView: {screen: Profile},
+    CreateFlockView: {screen: CreateFlock}
   });
 
 
