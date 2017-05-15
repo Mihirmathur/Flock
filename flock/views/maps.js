@@ -27,11 +27,24 @@ export default class Map extends React.Component {
     super(props);
     this.state = { 
     region: {
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitude: 0.78825,
+        longitude: 0.4324,
+        latitudeDelta: 0.0043,
+        longitudeDelta: 0.0034,
       } };
+  }
+
+  componentWillMount() {
+    const {state} = this.props.navigation;
+    if (state.params && state.params.post) {
+      console.log("post " + state.params.post);
+      this.setState({'region': {
+        'latitude': state.params.post.Latitude,
+        'longitude': state.params.post.Longitude,
+        'latitudeDelta': 0.0043,
+        'longitudeDelta': 0.0034,
+      }});
+    }
   }
 
   render() {
@@ -41,10 +54,10 @@ export default class Map extends React.Component {
       <MapView
         style={ styles.map }
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitude: this.state.region.latitude,
+          longitude: this.state.region.longitude,
+          latitudeDelta: this.state.region.latitudeDelta,
+          longitudeDelta: this.state.region.longitudeDelta,
         }} />
 
       </View>
