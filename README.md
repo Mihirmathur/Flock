@@ -8,6 +8,10 @@ Run instructions:
 - react-native link
 - To Run react-native run-ios
 
+Modify Instructions:
+- Landing page is loaded by app.js
+- Different views will go in the views folder. 
+
 # Navigation/Routing
 https://reactnavigation.org/docs/intro/
 
