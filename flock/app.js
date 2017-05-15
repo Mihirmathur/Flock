@@ -13,6 +13,7 @@ import {
 
 import {styles} from './views/styles';
 import LoggedIn_landing from './views/loggedin_landing'
+import Maps from './views/maps'
 
 //Home Screen
 class HomeScreen extends React.Component {
@@ -81,7 +82,8 @@ class HomeScreen extends React.Component {
 
   const flock = StackNavigator({
     Home: { screen: HomeScreen },
-    LoggedIn: { screen: LoggedIn_landing }
+    LoggedIn: { screen: LoggedIn_landing },
+    MapView: {screen: Maps}
   });
 
 
