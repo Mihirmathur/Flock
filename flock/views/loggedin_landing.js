@@ -17,7 +17,8 @@ import { styles } from './styles';
 
 export default class LoggedIn_landing extends React.Component {
     static navigationOptions = {
-        title: 'Flocks Near You',
+      title: 'Flocks Near You',
+      headerLeft: null
     };
 
   constructor(props) {

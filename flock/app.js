@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Grid, Row, Button, FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import {
+  Alert,
   AsyncStorage,
   AppRegistry,
   StyleSheet,
@@ -25,23 +26,64 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-    email: 'defaultemail@gmail.com', 
-    password: 'defaultpw', 
-    firstname : 'Mihir', 
-    lastname: 'Default'  };
+    email: '', 
+    password: '', 
+    firstname : '', 
+    lastname: ''  };
   }
 
   static navigationOptions = {
     title: 'Flock'
   };
 
+  signup() {
+    return fetch('https://flock-site-api.herokuapp.com/signup', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            First_name: this.state.firstname,
+            Last_name: this.state.lastname,
+            Email: this.state.email,
+            Password: this.state.password
+          })
+        }).then((response) => response.json());
+  }
+
+  login() {
+    return fetch('https://flock-site-api.herokuapp.com/login', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            Email: this.state.email,
+            Password: this.state.password
+          })
+        }).then((response) => response.json());
+  }
+
+  loginWithFB(token) {
+    return fetch('https://flock-site-api.herokuapp.com/loginWithFB', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token: token
+          })
+        }).then((response) => response.json());
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     var _this = this;
     return (
       <View style={styles.container}>
-
-      <Text>Hello!</Text>
 
       <FBLogin style={{ marginBottom: 10, }}
         ref={(fbLogin) => { this.fbLogin = fbLogin }}
@@ -50,20 +92,48 @@ class HomeScreen extends React.Component {
         onLogin={function(data){
           console.log("Logged in!");
           console.log(data);
-          _this.setState({ user : data.credentials });
+          _this.loginWithFB(data.credentials.token).then((responseJson) => {
+            if(responseJson.status == "success") {
+              try {
+                console.log("Saving token")
+                AsyncStorage.setItem('token', responseJson.app_token);
+                AsyncStorage.setItem('fb_token', responseJson.fb_token);
+                navigate('LoggedIn');
+              } catch (error) {
+                console.log(error)
+                Alert.alert('Login Error', 'An error occurred when saving login credentials')
+              }
+            }
+          });
         }}
         onLogout={function(){
-          console.log("Logged out.");
-          _this.setState({ user : null });
+          try {
+            console.log("Deleting token")
+            AsyncStorage.setItem('token', '');
+            console.log("Logged out.");
+          } catch (error) {
+            console.log(error)
+          }
         }}
         onLoginFound={function(data){
           console.log("Existing login found.");
           console.log(data);
-          _this.setState({ user : data.credentials });
+          _this.loginWithFB(data.credentials.token).then((responseJson) => {
+            if(responseJson.status == "success") {
+              try {
+                console.log("Saving token")
+                AsyncStorage.setItem('token', responseJson.app_token);
+                AsyncStorage.setItem('fb_token', responseJson.fb_token);
+                navigate('LoggedIn');
+              } catch (error) {
+                console.log(error)
+                Alert.alert('Login Error', 'An error occurred when saving login credentials')
+              }
+            }
+          });
         }}
         onLoginNotFound={function(){
           console.log("No user logged in.");
-          _this.setState({ user : null });
         }}
         onError={function(data){
           console.log("ERROR");
@@ -78,6 +148,7 @@ class HomeScreen extends React.Component {
         }}
       />
 
+      {/*
       <FormLabel >Email</FormLabel>
       <FormInput onChangeText={(email) => this.setState({email})} ref='forminput' textInputRef='email' autoCapitalize='none'/>
 
@@ -91,68 +162,61 @@ class HomeScreen extends React.Component {
       <FormInput  onChangeText={(lastname) => this.setState({lastname})}/>
 
       <Button style={styles.pad} onPress={() => {
-        fetch('https://flock-site-api.herokuapp.com/signup', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            First_name: this.state.firstname,
-            Last_name: this.state.lastname,
-            Email: this.state.email,
-            Password: this.state.password
-          })
-        }).then((response) => response.json())
-        .then((responseJson) => {
+        this.signup().then((responseJson) => {
           console.log(responseJson);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-        navigate('LoggedIn');
-      }} title="SignUp" />
-
-      <Button style={styles.pad} onPress={() => {
-        fetch('https://flock-site-api.herokuapp.com/login', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Email: this.state.email,
-            Password: this.state.password
-          })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-          console.log(responseJson.token);
           if(responseJson.status == "success") {
-            try {
-              console.log("Saving token")
-              AsyncStorage.setItem('token', responseJson.token);
-            } catch (error) {
-              console.log(error)
-            }
+            Alert.alert('Registration Successful', "Your user has been created")
+            this.login().then((response) => response.json())
+            .then((responseJson) => {
+              if(responseJson.status == "success") {
+                try {
+                  console.log("Saving token")
+                  AsyncStorage.setItem('token', responseJson.token);
+                  navigate('LoggedIn');
+                } catch (error) {
+                  console.log(error)
+                }
+              }
+            });
           } else {
-            console.log(responseJson.message)
+            Alert.alert('Registration Error', "The user could not be created")
           }
         })
         .catch((error) => {
           console.error(error);
         });
-        navigate('LoggedIn');
+      }} title="SignUp" />
+
+      <Button style={styles.pad} onPress={() => {
+        this.login().then((responseJson) => {
+          console.log(responseJson.token);
+          if(responseJson.status == "success") {
+            try {
+              console.log("Saving token")
+              AsyncStorage.setItem('token', responseJson.token);
+              navigate('LoggedIn');
+            } catch (error) {
+              console.log(error)
+              Alert.alert('Login Error', 'An internal server error occurred. Please wait before trying again')
+            }
+          } else {
+            Alert.alert('Login Error', 'Please check your credentials and try again')
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
       }} title="Login" />
 
       <Button style={styles.pad} onPress={() => {
         try {
           console.log("Deleting token")
           AsyncStorage.setItem('token', '');
+          Alert.alert('Logout Successful', 'You have been logged out')
         } catch (error) {
           console.log(error)
         }
-        navigate('LoggedIn');
-      }} title="Logout" />
+      }} title="Logout" />*/}
 
       </View>
       );
