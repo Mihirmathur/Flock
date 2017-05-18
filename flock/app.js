@@ -98,6 +98,7 @@ class HomeScreen extends React.Component {
                 console.log("Saving token")
                 AsyncStorage.setItem('token', responseJson.app_token);
                 AsyncStorage.setItem('fb_token', responseJson.fb_token);
+                AsyncStorage.setItem('fb_user', data.credentials.userId);
                 navigate('LoggedIn');
               } catch (error) {
                 console.log(error)
