@@ -84,7 +84,7 @@ export default class LoggedIn_landing extends React.Component {
       <Button backgroundColor='#03A9F4' 
        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
       title='Join this Flock!' 
-      onPress={()=>navigate('MapView', {'post': post})}
+      onPress={()=>navigate('EventView', {'post': post})}
       />
     </Card>
   );
@@ -98,7 +98,7 @@ export default class LoggedIn_landing extends React.Component {
   <Button backgroundColor='#03A9F4' 
    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
   title='Join this Flock!' 
-  onPress={()=>navigate('MapView')}
+  onPress={()=>navigate('EventView')}
   />
 </Card>
 

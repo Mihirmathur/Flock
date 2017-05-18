@@ -16,7 +16,7 @@ import {
 
 import {styles} from './views/styles';
 import LoggedIn_landing from './views/loggedin_landing'
-import Maps from './views/maps'
+import EventPage from './views/EventPage'
 import Profile from './views/Profile'
 import CreateFlock from './views/CreateFlock'
 
@@ -226,7 +226,7 @@ class HomeScreen extends React.Component {
   const flock = StackNavigator({
     Home: { screen: HomeScreen },
     LoggedIn: { screen: LoggedIn_landing },
-    MapView: {screen: Maps},
+    EventView: {screen: EventPage},
     ProfileView: {screen: Profile},
     CreateFlockView: {screen: CreateFlock}
   });
