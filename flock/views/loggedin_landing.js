@@ -29,6 +29,33 @@ export default class LoggedIn_landing extends React.Component {
     };
   }
 
+  friends() {
+    AsyncStorage.getItem('fb_user').then((fb_user) => {
+      if(fb_user) {
+        AsyncStorage.getItem('fb_token').then((fb_token) => {
+          if(fb_token) {
+            fetch("https://graph.facebook.com/" + fb_user + "/friends?access_token=" + fb_token, {
+                method: 'GET',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+                }).then((response) => response.json())
+                .then((responseJson) => {
+                  if(responseJson.data) {
+                    this.props.navigation.navigate('Friends', {'friends': responseJson.data})
+                  }
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+          }
+        })
+      }
+    })
+  }
+
+
   profile() {
     AsyncStorage.getItem('token').then((token) => {
       if (token) {
@@ -90,6 +117,11 @@ export default class LoggedIn_landing extends React.Component {
     this.profile()
   }
   />
+
+  <Button backgroundColor='green' 
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+              title='Friends'
+              onPress={()=>this.friends()} />
 
   <Button backgroundColor='#0355F5' 
    buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}

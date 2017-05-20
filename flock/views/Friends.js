@@ -26,18 +26,18 @@ import EventPage from './EventPage'
 import MapView from 'react-native-maps';
 
 
-export default class AttendeeListPage extends React.Component {
+export default class Friends extends React.Component {
   static navigationOptions = {
-    title: 'Flock Event',
+    title: 'Friends',
   };
 
   constructor(props) {
     super(props);
-      attendees: []
+      friends: []
   }
 
-  profile(attendee) {
-    this.props.navigation.navigate('ProfileView', {'user': attendee, 'fb_user': attendee.Fb_id})
+  profile(friend) {
+    this.props.navigation.navigate('ProfileView', {'user': friend, 'fb_user': friend.id})
   }
 
   componentWillMount() {
@@ -46,7 +46,7 @@ export default class AttendeeListPage extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { state } = this.props.navigation;
     var _this = this;
     return (
       <View style={styles.containerView}>
@@ -54,13 +54,13 @@ export default class AttendeeListPage extends React.Component {
         <ScrollView>
 
         {
-          this.state.attendees.map(function(attendee){
+          state.params.friends.map(function(friend){
             return(
-              <TouchableHighlight onPress={() => _this.profile(attendee)}>
+              <TouchableHighlight onPress={() => _this.profile(friend)}>
                 <View>
                   <Text>
-                    <Image style={{width: 40, height: 40, borderRadius: 15}} source={{uri: "https://graph.facebook.com/" + attendee.Fb_id + "/picture?width=100&height=100" }} />
-                    {`${attendee.First_name} ${attendee.Last_name}`}
+                    <Image style={{width: 40, height: 40, borderRadius: 15}} source={{uri: "https://graph.facebook.com/" + friend.id + "/picture?width=100&height=100" }} />
+                    {`${friend.name}`}
                   </Text>
                 </View>
               </TouchableHighlight>

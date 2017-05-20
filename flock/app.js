@@ -20,6 +20,7 @@ import EventPage from './views/EventPage'
 import Profile from './views/Profile'
 import CreateFlock from './views/CreateFlock'
 import AttendeeListPage from './views/AttendeeListPage'
+import Friends from './views/Friends'
 
 //Home Screen
 class HomeScreen extends React.Component {
@@ -231,7 +232,8 @@ class HomeScreen extends React.Component {
     EventView: {screen: EventPage},
     ProfileView: {screen: Profile},
     CreateFlockView: {screen: CreateFlock},
-    AttendeeList: {screen: AttendeeListPage}
+    AttendeeList: {screen: AttendeeListPage},
+    Friends: {screen: Friends}
   });
 
 
