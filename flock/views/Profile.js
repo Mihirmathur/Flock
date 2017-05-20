@@ -94,6 +94,7 @@ export default class Profile extends React.Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
 
@@ -113,8 +114,8 @@ export default class Profile extends React.Component {
             <TimeAgo time={post.Time_created} />
             <Button backgroundColor='#03A9F4' 
              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='Join this Flock!' 
-            onPress={()=>navigate('MapView', {'post': post})}
+            title='View this Flock!' 
+            onPress={()=>navigate('EventView', {'post': post})}
             />
           </Card>
         );
