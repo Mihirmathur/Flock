@@ -16,6 +16,12 @@ import {
 
 import LoggedIn_landing from './loggedin_landing'
 import { styles } from './styles';
+import { GMAPS_AUTH } from '../environment.js'
+
+var {GooglePlacesAutocomplete} = require('react-native-google-places-autocomplete');
+
+const homePlace = {description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
+const workPlace = {description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
 
 
 export default class CreateFlock extends React.Component {
@@ -34,17 +40,7 @@ export default class CreateFlock extends React.Component {
     zip: 0  };
   }
 
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={styles.container}>
-      <Text style={{marginTop: 10}}>Create a Flock!</Text>
-
-      <FormLabel >Title</FormLabel>
-      <FormInput onChangeText={(title) => this.setState({title})} autoCapitalize='none'/>
-
-      <FormLabel>Description</FormLabel>
-      <FormInput onChangeText={(description) => this.setState({description})} autoCapitalize='none'/>
+/*
 
       <FormLabel>Location</FormLabel>
       <FormInput onChangeText={(location) => this.setState({location})} autoCapitalize='none'/>
@@ -58,8 +54,87 @@ export default class CreateFlock extends React.Component {
       <FormLabel>Zip</FormLabel>
       <FormInput  onChangeText={(zip) => this.setState({zip})} autoCapitalize='none'/>
 
+
+*/
+
+  render() {
+    const { navigate } = this.props.navigation;
+    API_KEY=GMAPS_AUTH;
+    console.log(API_KEY);
+    return (
+      <View style={styles.container}>
+      <Text style={{marginTop: 10}}>Create a Flock!</Text>
+
+      <FormLabel >Title</FormLabel>
+      <FormInput onChangeText={(title) => this.setState({title})} autoCapitalize='none'/>
+
+      <FormLabel>Description</FormLabel>
+      <FormInput onChangeText={(description) => this.setState({description})} autoCapitalize='none'/>
+
+      <FormLabel>Location</FormLabel>
+      <FormInput onChangeText={(location) => this.setState({location})} autoCapitalize='none'/>
+
+
+       <FormLabel> Search for address </FormLabel>
+
+       <GooglePlacesAutocomplete
+
+        placeholder='Search'
+        minLength={1} // minimum length of text to search
+        autoFocus={false}
+        listViewDisplayed='true'    // true/false/undefined
+        fetchDetails={true}
+        renderDescription={(row) => row.description} // custom description render
+        onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+          console.log(data);
+          console.log(details);
+          this.state.latitude = details.geometry.location.lat.toString();
+          this.state.longitude = details.geometry.location.lng.toString();
+          this.state.zip = '90024';
+
+          console.log(this.state.latitude);
+          console.log(this.state.longitude);
+          console.log(this.state.zip);
+        }}
+        getDefaultValue={() => {
+          return ''; // text input default value
+        }}
+        query={{
+          // available options: https://developers.google.com/places/web-service/autocomplete
+          key: `${API_KEY}`,
+          language: 'en', // language of the results
+        }}
+         styles={{
+           container: {
+              width:300,
+              height: 100,
+           },
+            textInputContainer: {
+              backgroundColor: 'grey',
+              borderTopWidth: 0,
+              borderBottomWidth:0
+            },
+            textInput: {
+              width: 300,
+              height: 30,
+              color: '#5d5d5d',
+              fontSize: 16
+            },
+            predefinedPlacesDescription: {
+              color: '#1faadb'
+            },
+          }}
+
+        nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+
+        debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+      />
+
       <Button style={styles.pad} onPress={() => {
         AsyncStorage.getItem('token').then((value) => {
+          console.log(this.state.latitude);
+          console.log(this.state.longitude);
+          console.log(this.state.zip);
           if (value) {
             fetch('https://flock-site-api.herokuapp.com/posts', {
               method: 'POST',
