@@ -12,6 +12,8 @@ import {
   View,
   ListView,
   Image,
+  ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 
 import {
@@ -34,6 +36,11 @@ export default class AttendeeListPage extends React.Component {
       attendees: []
   }
 
+  profile(attendee) {
+    console.log(attendee);
+    this.props.navigation.navigate('ProfileView', {'user': attendee, 'fb_user': attendee.Fb_id})
+  }
+
   componentWillMount() {
     const {state} = this.props.navigation;
     this.setState({ attendees: state.params.attendees})
@@ -41,22 +48,30 @@ export default class AttendeeListPage extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    var _this = this;
     return (
       <View style={styles.containerView}>
+
+        <ScrollView>
+
         {
           this.state.attendees.map(function(attendee){
             return(
-              <View>
-                <Text>
+              <TouchableHighlight onPress={() => _this.profile(attendee)}>
+                <View>
+                  <Text>
                     <Image style={{width: 40, height: 40, borderRadius: 15}} source={{uri: "https://graph.facebook.com/" + attendee.Fb_id + "/picture?width=100&height=100" }} />
                     {`${attendee.First_name} ${attendee.Last_name}`}
-                </Text>
-              </View>
+                  </Text>
+                </View>
+              </TouchableHighlight>
             );
           
           })
 
         }
+
+        </ScrollView>
       </View>
     )
     

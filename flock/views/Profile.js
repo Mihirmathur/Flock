@@ -39,58 +39,38 @@ export default class Profile extends React.Component {
   };
 
   componentWillMount() {
-    console.log("BEGINNING")
-    AsyncStorage.getItem('token').then((value) => {
-      if (value) {
-        this.setState({'token': value});
-        fetch('https://flock-site-api.herokuapp.com/profile', {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + this.state.token,
-          'Content-Type': 'application/json'
-        }
-        }).then((response) => response.json())
-        .then((responseJson) => {
-          if (responseJson.status == "success") {
-            this.setState({'user': responseJson.user})
-            console.log(this.state.user)
-            fetch('https://flock-site-api.herokuapp.com/posts/search', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                "User_id": responseJson.user.Id
-                })
-              }).then((response) => response.json())
-              .then((responseJson) => {
-                console.log(responseJson);
-                if (responseJson.status == "success") {
-                  if (responseJson.posts) {
-                    this.setState({'posts': responseJson.posts})
-                  }
-                  console.log(this.state.posts)
-                }
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-          }
+    const {state} = this.props.navigation;
+    if(state.params.token) {
+      this.setState({'token': state.params.token})
+    }
+    if(state.params.user) {
+      this.setState({'user': state.params.user})
+    }
+    if(state.params.fb_user) {
+      this.setState({'fb_user': state.params.fb_user})
+    }
+    fetch('https://flock-site-api.herokuapp.com/posts/search', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "User_id": state.params.user.Id
         })
-        .catch((error) => {
-          console.error(error);
-        });
-      }
-    });
-    AsyncStorage.getItem('fb_user').then((value) => {
-      if (value) {
-        console.log(value)
-        this.setState({'fb_user': value});
-        this.forceUpdate()
-      }
-    });
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        if (responseJson.status == "success") {
+          if (responseJson.posts) {
+            this.setState({'posts': responseJson.posts})
+          }
+          console.log(this.state.posts)
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
@@ -101,6 +81,8 @@ export default class Profile extends React.Component {
       <Image style={{width: 128, height: 128, borderRadius: 64}} source={{uri: "https://graph.facebook.com/" + this.state.fb_user + "/picture?width=160&height=160" }} />
 
       <Text style={{marginTop: 10}}>{this.state.user.First_name} {this.state.user.Last_name}</Text>
+
+      <ScrollView>
 
       {this.state.posts.reverse().map(function(post, i) {
         return (
@@ -120,6 +102,8 @@ export default class Profile extends React.Component {
           </Card>
         );
       })}
+
+      </ScrollView>
 
       </View>
       );

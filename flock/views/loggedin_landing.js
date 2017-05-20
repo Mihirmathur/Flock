@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Button, FormLabel, FormInput, FormValidationMessage, Card, ListItem } from 'react-native-elements';
 import TimeAgo from 'react-native-timeago';  
 import {
+    AsyncStorage,
     AppRegistry,
     StyleSheet,
     Text,
@@ -26,6 +27,33 @@ export default class LoggedIn_landing extends React.Component {
     this.state = { 
     posts: []
     };
+  }
+
+  profile() {
+    AsyncStorage.getItem('token').then((token) => {
+      if (token) {
+        fetch('https://flock-site-api.herokuapp.com/profile', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.status == "success") {
+            AsyncStorage.getItem('fb_user').then((fb_user) => {
+              if (fb_user) {
+                this.props.navigation.navigate('ProfileView', {'token': token, 'user': responseJson.user, 'fb_user': fb_user})
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    });
   }
 
   componentWillMount() {
@@ -58,7 +86,9 @@ export default class LoggedIn_landing extends React.Component {
             <Button backgroundColor='#0355F5' 
    buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
   title='Profile Page' 
-  onPress={()=>navigate('ProfileView')}
+  onPress={()=>
+    this.profile()
+  }
   />
 
   <Button backgroundColor='#0355F5' 
