@@ -37,7 +37,24 @@ export default class Friends extends React.Component {
   }
 
   profile(friend) {
-    this.props.navigation.navigate('ProfileView', {'user': friend, 'fb_user': friend.id})
+    return fetch('https://flock-site-api.herokuapp.com/users/search', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            Fb_id: friend.id
+          })
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          if(responseJson.status == "success" && responseJson.users != []) {
+            this.props.navigation.navigate('ProfileView', {'user': responseJson.users[0], 'fb_user': friend.id})
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
   }
 
   componentWillMount() {
