@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
 import {
@@ -38,6 +38,7 @@ export default class EventPage extends React.Component {
       attendees: [],
       attending: false,
       user_email: '',
+      profile: null,
     };
   }
 
@@ -80,6 +81,7 @@ export default class EventPage extends React.Component {
             if (responseJson.status == "success") {
               if (responseJson.user){
                 this.state.user_email = responseJson.user.Email;
+                this.state.profile = responseJson.user;
                 for(var i = 0; i < this.state.attendees.length; i++){
                   if(this.state.attendees[i].Email == this.state.user_email){
                       console.log("FOUND FOUND FOUND FOUND FOUND")
@@ -130,6 +132,7 @@ export default class EventPage extends React.Component {
        .then((response) => response.json())
           .then((responseJson) => {
                if (responseJson.status == "success") {
+                  this.state.attendees.push(this.state.profile);
                   this.setState({attending: true});
                   console.log("STATE SHOULD CHANGE TO ATTENDING");
 
@@ -161,6 +164,15 @@ export default class EventPage extends React.Component {
           .then((responseJson) => {
             console.log("THIS IS THE RESPONSE STATUS OF REMOVING ATTENDANCE: " +  responseJson.status);
                if (responseJson.status == "success") {
+                  var i;
+                  for (i = 0; i < this.state.attendees.length; i++){
+                    if (this.state.attendees[i].Id == this.state.profile.Id){
+                      break;
+                    }
+                  }
+                  if (i < this.state.attendees.length)
+                    this.state.attendees.splice(i, 1)
+
                   this.setState({'attending': false});
                   console.log("STATE SHOULD CHANGE TO NOT ATTENDING");
                 }
@@ -173,6 +185,8 @@ export default class EventPage extends React.Component {
   
 
   render() {
+    const { navigate } = this.props.navigation;
+    var attendeesButtonTitle = 'Attendee List (' + this.state.attendees.length + ')';
     console.log("THIS IS THE VALUE OF ATTENDING AT TIME OF RENDER:" + this.state.attending)
     return (
       <View style={styles.eventContainer}>
@@ -188,9 +202,11 @@ export default class EventPage extends React.Component {
           longitudeDelta: this.state.region.longitudeDelta,
         }} />
 
-        <View style={{backgroundColor:'red', height: 100, width: 300}}>
+          <Button backgroundColor='green' 
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+              title={attendeesButtonTitle}
+              onPress={()=>navigate('AttendeeList', {'attendees': this.state.attendees})} />
 
-        </View>
           {this.state.attending == false ?
               <Button backgroundColor='#03A9F4' 
               buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}

@@ -19,6 +19,7 @@ import LoggedIn_landing from './views/loggedin_landing'
 import EventPage from './views/EventPage'
 import Profile from './views/Profile'
 import CreateFlock from './views/CreateFlock'
+import AttendeeListPage from './views/AttendeeListPage'
 
 //Home Screen
 class HomeScreen extends React.Component {
@@ -229,7 +230,8 @@ class HomeScreen extends React.Component {
     LoggedIn: { screen: LoggedIn_landing },
     EventView: {screen: EventPage},
     ProfileView: {screen: Profile},
-    CreateFlockView: {screen: CreateFlock}
+    CreateFlockView: {screen: CreateFlock},
+    AttendeeList: {screen: AttendeeListPage}
   });
 
 
