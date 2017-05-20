@@ -19,20 +19,28 @@ export const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  mapcontainer: {
+  eventContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  }
+    height: 300,
+    width: 300,
+  },
+  eventTitle: {
+    textAlign: 'center', // <-- the magic
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 0,
+    width: 200,
+  },
+  eventParticipants: {
+    width: 350,
+    backgroundColor: 'red', 
+  },
 });
