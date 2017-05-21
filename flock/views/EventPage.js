@@ -198,7 +198,14 @@ export default class EventPage extends React.Component {
           longitude: this.state.region.longitude,
           latitudeDelta: this.state.region.latitudeDelta,
           longitudeDelta: this.state.region.longitudeDelta,
-        }} />
+        }} >
+
+      <MapView.Marker
+        coordinate={{latitude: this.state.region.latitude,
+        longitude: this.state.region.longitude}}
+        title={this.props.navigation.state.params.post.Location} />
+
+      </MapView>
 
           <Button backgroundColor='green' 
               buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
