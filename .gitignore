@@ -209,5 +209,7 @@ typings/
 # dotenv environment variables file
 .env
 
+# Environment
+environment.js
 
 # End of https://www.gitignore.io/api/reactnative
