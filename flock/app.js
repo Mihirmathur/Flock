@@ -21,6 +21,7 @@ import Profile from './views/Profile'
 import CreateFlock from './views/CreateFlock'
 import AttendeeListPage from './views/AttendeeListPage'
 import Friends from './views/Friends'
+import Map from './views/Map'
 
 //Home Screen
 class HomeScreen extends React.Component {
@@ -93,7 +94,6 @@ class HomeScreen extends React.Component {
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         onLogin={function(data){
           console.log("Logged in!");
-          console.log(data);
           _this.loginWithFB(data.credentials.token).then((responseJson) => {
             if(responseJson.status == "success") {
               try {
@@ -166,7 +166,6 @@ class HomeScreen extends React.Component {
 
       <Button style={styles.pad} onPress={() => {
         this.signup().then((responseJson) => {
-          console.log(responseJson);
           if(responseJson.status == "success") {
             Alert.alert('Registration Successful', "Your user has been created")
             this.login().then((response) => response.json())
@@ -233,7 +232,8 @@ class HomeScreen extends React.Component {
     ProfileView: {screen: Profile},
     CreateFlockView: {screen: CreateFlock},
     AttendeeList: {screen: AttendeeListPage},
-    Friends: {screen: Friends}
+    Friends: {screen: Friends},
+    Map: {screen: Map}
   });
 
 

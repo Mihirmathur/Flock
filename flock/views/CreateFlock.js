@@ -86,15 +86,9 @@ export default class CreateFlock extends React.Component {
         fetchDetails={true}
         renderDescription={(row) => row.description} // custom description render
         onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-          console.log(data);
-          console.log(details);
           this.state.latitude = details.geometry.location.lat.toString();
           this.state.longitude = details.geometry.location.lng.toString();
           this.state.zip = '90024';
-
-          console.log(this.state.latitude);
-          console.log(this.state.longitude);
-          console.log(this.state.zip);
         }}
         getDefaultValue={() => {
           return ''; // text input default value
@@ -132,9 +126,6 @@ export default class CreateFlock extends React.Component {
 
       <Button style={styles.pad} onPress={() => {
         AsyncStorage.getItem('token').then((value) => {
-          console.log(this.state.latitude);
-          console.log(this.state.longitude);
-          console.log(this.state.zip);
           if (value) {
             fetch('https://flock-site-api.herokuapp.com/posts', {
               method: 'POST',
@@ -153,7 +144,6 @@ export default class CreateFlock extends React.Component {
               })
             }).then((response) => response.json())
             .then((responseJson) => {
-              console.log(responseJson);
             })
             .catch((error) => {
               console.error(error);

@@ -43,7 +43,7 @@ export default class EventPage extends React.Component {
   }
 
   componentWillMount() {
-    const {state} = this.props.navigation;
+    const { state } = this.props.navigation;
     console.log("This is the postID:" + state.params.post.Id);
     fetch('https://flock-site-api.herokuapp.com/posts/' + state.params.post.Id + "/attendees" , {
         method: 'GET',
@@ -53,7 +53,6 @@ export default class EventPage extends React.Component {
         }
         }).then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
           if (responseJson.status == "success") {
             if (responseJson.attendees) {
               this.setState({'attendees': responseJson.attendees})
@@ -102,7 +101,6 @@ export default class EventPage extends React.Component {
     });
 
     if (state.params && state.params.post) {
-      console.log("post " + state.params.post);
       this.setState({'region': {
         'latitude': state.params.post.Latitude,
         'longitude': state.params.post.Longitude,

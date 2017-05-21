@@ -11,6 +11,12 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'stretch'
   },
+  mapFullContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
   pad: {
     padding: 30
   },
@@ -31,6 +37,13 @@ export const styles = StyleSheet.create({
   map: {
     height: 300,
     width: 300,
+  },
+  mapFull: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   eventTitle: {
     textAlign: 'center', // <-- the magic

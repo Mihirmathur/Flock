@@ -29,6 +29,23 @@ export default class LoggedIn_landing extends React.Component {
     };
   }
 
+  map() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var initialPosition = JSON.stringify(position);
+        this.setState({'region': {
+          'latitude': position.coords.latitude,
+          'longitude': position.coords.longitude,
+          'latitudeDelta': 0.043,
+          'longitudeDelta': 0.034,
+        }});
+        this.props.navigation.navigate('Map', {'region': this.state.region, 'posts': this.state.posts});
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+  }
+
   friends() {
     AsyncStorage.getItem('fb_user').then((fb_user) => {
       if(fb_user) {
@@ -92,12 +109,10 @@ export default class LoggedIn_landing extends React.Component {
       }
     }).then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
       if (responseJson.status == "success") {
         if (responseJson.posts) {
           this.setState({'posts': responseJson.posts})
         }
-        console.log(this.state.posts)
       }
     })
     .catch((error) => {
@@ -107,6 +122,7 @@ export default class LoggedIn_landing extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const _this = this;
     return (
       <View style={styles.container}>
       
@@ -122,6 +138,11 @@ export default class LoggedIn_landing extends React.Component {
       buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
       title='Friends'
       onPress={()=>this.friends()} />
+
+      <Button backgroundColor='#0355F5' 
+      buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
+      title='Map'
+      onPress={()=>this.map()} />
 
       <Button backgroundColor='#0355F5' 
       buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}

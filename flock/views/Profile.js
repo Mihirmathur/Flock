@@ -60,12 +60,10 @@ export default class Profile extends React.Component {
         })
       }).then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
         if (responseJson.status == "success") {
           if (responseJson.posts) {
             this.setState({'posts': responseJson.posts})
           }
-          console.log(this.state.posts)
         }
       })
       .catch((error) => {
