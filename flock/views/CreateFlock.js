@@ -40,6 +40,41 @@ export default class CreateFlock extends React.Component {
     zip: 0  };
   }
 
+   findZip = () => {
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.state.latitude + ',' + this.state.longitude + '&sensor=true', {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+       .then((response) => response.json())
+          .then((responseJson) => {
+               if (responseJson.results) {
+                  var zipCodeFound = false;
+                   for (var i = 0; i < responseJson.results.length; i++) {
+                      if (responseJson.results[i].address_components){
+                        for (var j = 0; j < responseJson.results[i].address_components.length; j++){
+                          for (var k = 0; k < responseJson.results[i].address_components[j].types.length; k++){
+                            if (responseJson.results[i].address_components[j].types[k] == "postal_code") {
+                              this.state.zip = responseJson.results[i].address_components[j].long_name.toString();
+                              console.log("ZIP CODE FOUND IN RESPONSE FROM GOOGLE");
+                              console.log(this.state.zip);
+                              zipCodeFound = true;
+                              return;
+                            }
+                          }
+                        }
+                      }
+
+                    }      
+                    if(zipCodeFound == false){
+                      this.zip = '90024'
+                    }
+                }
+          })  
+    };
+
 /*
 
       <FormLabel>Location</FormLabel>
@@ -88,7 +123,23 @@ export default class CreateFlock extends React.Component {
         onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
           this.state.latitude = details.geometry.location.lat.toString();
           this.state.longitude = details.geometry.location.lng.toString();
-          this.state.zip = '90024';
+          var zipCodeFound = false;
+           for (var i = 0; i < details.address_components.length; i++) {
+              for (var j = 0; j < details.address_components[i].types.length; j++) {
+                if (details.address_components[i].types[j] == "postal_code") {
+                  this.state.zip = details.address_components[i].long_name.toString();
+                  console.log("ZIP CODE FOUND IN RESPONSE FROM GOOGLE");
+                  console.log(this.state.zip);
+                  zipCodeFound = true;
+                  break;
+                }
+              }
+            }
+                  
+            if(zipCodeFound == false){
+              console.log("ZIP NOT FOUND, must make second request")
+              this.findZip()
+            }
         }}
         getDefaultValue={() => {
           return ''; // text input default value
