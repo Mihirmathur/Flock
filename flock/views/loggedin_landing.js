@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Button, FormLabel, FormInput, FormValidationMessage, Card, ListItem } from 'react-native-elements';
+import { Grid, Row,  FormLabel, Button, FormInput, FormValidationMessage, Card, ListItem } from 'react-native-elements';
 import TimeAgo from 'react-native-timeago';  
 import {
   AsyncStorage,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   ScrollView
 } from 'react-native';
 
@@ -22,6 +23,7 @@ import mapIcon from '../img/map.png';
 import profileIcon from '../img/profile.png';
 import createflockIcon from '../img/startflock.png';
 import friendsIcon from '../img/friends.png';
+import flockLogo from '../img/flock_logo.png';
 
 export default class LoggedIn_landing extends React.Component {
   static navigationOptions = {
@@ -50,7 +52,7 @@ export default class LoggedIn_landing extends React.Component {
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+      );
   }
 
   friends() {
@@ -133,41 +135,55 @@ export default class LoggedIn_landing extends React.Component {
     return (
       <View style={styles.container}>
       
-
-      <Text style={{marginTop: 20}}>Join a flock!</Text>
-      
+      <Image source={require('../img/flock_logo.png')} style={{width: 120, height: 80}}/>
       <ScrollView style={styles.scrollContainer}>
 
       {this.state.posts.reverse().map(function(post, i) {
         return (
-          <Card title={post.Title}>
-          <Text style={{marginBottom: 10}}>
+          <View style={styles.card} title={post.Title}>
+
+          <Text style={styles.title}>{post.Title}</Text>
+
+           <View
+          style={{
+            borderBottomColor: '#F4EEF0',
+            borderBottomWidth: 1,
+            marginTop:2,
+            marginBottom: 4
+          }}
+          />
+          
+          <Text style={styles.description}>
           Location: {post.Location}
           </Text>
-          <Text style={{marginBottom: 10}}>
+          
+          <Text style={styles.description}>
           {post.Description}
           </Text>
-          <TimeAgo time={post.Time_created} />
+          
+          <TimeAgo style={styles.description} time={post.Time_created} />
+          
           <Button backgroundColor='#03A9F4' 
-          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-          title='View this Flock!' 
+          buttonStyle={{borderRadius: 20, width: 130, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+          title='View Flock!' 
           onPress={()=>navigate('EventView', {'post': post})}
           />
-          </Card>
+
+          </View>
           );
       })}
 
       </ScrollView>
 
-            <View style={styles.navBar}>
-                <CircleButton size={40} 
-                primaryColor = "#9C2A4D" secondaryColor="#CB3E6A" 
-                iconButtonRight={createflockIcon} iconButtonTop={profileIcon} iconButtonLeft={friendsIcon} iconButtonBottom={mapIcon}
-                onPressButtonTop={()=>this.profile()} onPressButtonLeft={()=>this.friends()}
-                onPressButtonRight={()=>navigate('CreateFlockView')} onPressButtonBottom={()=>this.map()}
+      <View style={styles.navBar}>
+      <CircleButton size={50} 
+      primaryColor = "#9C2A4D" secondaryColor="#CB3E6A" 
+      iconButtonRight={createflockIcon} iconButtonTop={profileIcon} iconButtonLeft={friendsIcon} iconButtonBottom={mapIcon}
+      onPressButtonTop={()=>this.profile()} onPressButtonLeft={()=>this.friends()}
+      onPressButtonRight={()=>navigate('CreateFlockView')} onPressButtonBottom={()=>this.map()}
 
-                />
-            </View>
+      />
+      </View>
 
 
 

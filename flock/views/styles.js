@@ -13,9 +13,8 @@ export const styles = StyleSheet.create({
   },
   navBar:{
     flex: 1, 
-    paddingTop: 20,
+    paddingBottom: 60,
     justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
     fontSize: 10,
@@ -28,7 +27,38 @@ export const styles = StyleSheet.create({
     height: 50
   },
   scrollContainer:{
-    height: 280
+    height: 400,
+    backgroundColor: "white"
+  },
+  card:{
+    borderWidth: 1,
+    borderRadius: 5,
+    margin: 12,
+    padding: 20,
+    shadowColor: "#F4EEF0",
+    shadowOpacity: .8,
+    shadowRadius: 5,
+    borderColor: "#E4E1E2"
+  },
+  title:{
+    fontSize: 16,
+    fontFamily: 'Avenir-Medium'
+  },
+  description:{
+    fontSize: 12,
+    marginTop:2,
+    marginBottom:2,
+    fontFamily: 'Avenir-Light'
+  },
+  button:{
+    backgroundColor:'#03A9F4',
+    borderRadius: 20,
+    width: 160,
+    fontSize: 12,
+    marginTop:2,
+    marginBottom:2,
+    fontFamily: 'Avenir-Light'
+
   },
 
   mapFullContainer: {
