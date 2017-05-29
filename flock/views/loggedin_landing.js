@@ -16,6 +16,13 @@ import {
 
 import { styles } from './styles';
 
+import CircleButton from 'react-native-circle-button';
+
+import mapIcon from '../img/map.png';
+import profileIcon from '../img/profile.png';
+import createflockIcon from '../img/startflock.png';
+import friendsIcon from '../img/friends.png';
+
 export default class LoggedIn_landing extends React.Component {
   static navigationOptions = {
     title: 'Flocks Near You',
@@ -126,33 +133,10 @@ export default class LoggedIn_landing extends React.Component {
     return (
       <View style={styles.container}>
       
-      <Button backgroundColor='#0355F5' 
-      buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
-      title='Profile Page' 
-      onPress={()=>
-        this.profile()
-      }
-      />
 
-      <Button backgroundColor='#0355F5' 
-      buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
-      title='Friends'
-      onPress={()=>this.friends()} />
-
-      <Button backgroundColor='#0355F5' 
-      buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
-      title='Map'
-      onPress={()=>this.map()} />
-
-      <Button backgroundColor='#0355F5' 
-      buttonStyle={{borderRadius: 0, marginLeft: 50, marginRight: 50, marginBottom: 10}}
-      title= 'Start Flock' 
-      onPress={()=>navigate('CreateFlockView')}
-      />
-
-      <Text style={{marginTop: 10}}>Join a flock!</Text>
+      <Text style={{marginTop: 20}}>Join a flock!</Text>
       
-      <ScrollView>
+      <ScrollView style={styles.scrollContainer}>
 
       {this.state.posts.reverse().map(function(post, i) {
         return (
@@ -174,6 +158,18 @@ export default class LoggedIn_landing extends React.Component {
       })}
 
       </ScrollView>
+
+            <View style={styles.navBar}>
+                <CircleButton size={40} 
+                primaryColor = "#9C2A4D" secondaryColor="#CB3E6A" 
+                iconButtonRight={createflockIcon} iconButtonTop={profileIcon} iconButtonLeft={friendsIcon} iconButtonBottom={mapIcon}
+                onPressButtonTop={()=>this.profile()} onPressButtonLeft={()=>this.friends()}
+                onPressButtonRight={()=>navigate('CreateFlockView')} onPressButtonBottom={()=>this.map()}
+
+                />
+            </View>
+
+
 
       </View>
       );

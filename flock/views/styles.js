@@ -11,6 +11,26 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'stretch'
   },
+  navBar:{
+    flex: 1, 
+    paddingTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    fontSize: 10,
+    backgroundColor: "#F4EEF0"
+  },
+  menuButton: {
+    borderRadius: 0, 
+    fontSize: 10,
+    width: 140,
+    height: 50
+  },
+  scrollContainer:{
+    height: 280
+  },
+
   mapFullContainer: {
     flex: 1,
     justifyContent: 'center',
