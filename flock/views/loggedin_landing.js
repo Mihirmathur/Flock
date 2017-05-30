@@ -124,6 +124,7 @@ export default class LoggedIn_landing extends React.Component {
           this.setState({'posts': responseJson.posts})
           const _this = this;
           responseJson.posts.map(function(post, i) {
+            if (!_this.state['userForPost' + post.Id]) {
             console.log(post.Id);
             fetch('https://flock-site-api.herokuapp.com/users/' + post.User_id, {
               method: 'GET',
@@ -146,6 +147,7 @@ export default class LoggedIn_landing extends React.Component {
               .catch((error) => {
                 console.error(error);
               });
+            }
           });
         }
       }
