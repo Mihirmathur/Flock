@@ -6,6 +6,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
   Image,
   ScrollView
@@ -121,6 +122,31 @@ export default class LoggedIn_landing extends React.Component {
       if (responseJson.status == "success") {
         if (responseJson.posts) {
           this.setState({'posts': responseJson.posts})
+          const _this = this;
+          responseJson.posts.map(function(post, i) {
+            console.log(post.Id);
+            fetch('https://flock-site-api.herokuapp.com/users/' + post.User_id, {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }}).then((response) => response.json())
+              .then((responseJson) => {
+                if (responseJson.status == "success") {
+                  if (responseJson.user) {
+                    console.log(responseJson.user)
+                    var key = 'userForPost' + post.Id
+                    var val = responseJson.user
+                    var obj  = {}
+                    obj[key] = val
+                    _this.setState(obj)
+                  }
+                }
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          });
         }
       }
     })
@@ -152,6 +178,16 @@ export default class LoggedIn_landing extends React.Component {
             marginBottom: 4
           }}
           />
+
+          {_this.state['userForPost' + post.Id] && 
+            <TouchableHighlight underlayColor="white" onPress={() => _this.props.navigation.navigate('ProfileView', {'user': _this.state['userForPost' + post.Id], 'fb_user': _this.state['userForPost' + post.Id].Fb_id})}>
+              <View>
+                <Text>
+                  <Image style={{width: 64, height: 64, borderRadius: 32}} source={{uri: "https://graph.facebook.com/" + _this.state['userForPost' + post.Id].Fb_id + "/picture?width=160&height=160" }} />
+                </Text>
+              </View>
+            </TouchableHighlight>
+          }
           
           <Text style={styles.description}>
           Location: {post.Location}
