@@ -110,6 +110,27 @@ export default class EventPage extends React.Component {
     }
   }
 
+  deletePost = () => {
+    AsyncStorage.getItem('token').then((value) => {
+      if (value) {
+       fetch('https://flock-site-api.herokuapp.com/posts/' + this.props.navigation.state.params.post.Id, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + value,
+            'Content-Type': 'application/json',
+          }
+        })
+       .then((response) => response.json())
+          .then((responseJson) => {
+               if (responseJson.status == "success") {
+                  this.props.navigation.navigate('LoggedIn');
+                }
+          });
+      }
+    });
+  }
+
   createNewAttendee = () => {
     user_token = AsyncStorage.getItem("token");
     console.log(user_token);
@@ -223,6 +244,13 @@ export default class EventPage extends React.Component {
               title='Leave this Flock!' 
               onPress={this.removeAttendance} /> 
             }
+
+          {this.state.profile && this.state.profile.Id == this.props.navigation.state.params.post.User_id &&
+            <Button backgroundColor='#AA5555' 
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+              title='Delete this Flock!' 
+              onPress={this.deletePost} /> 
+          }
 
       </View>
       );

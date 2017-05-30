@@ -121,7 +121,7 @@ export default class LoggedIn_landing extends React.Component {
     .then((responseJson) => {
       if (responseJson.status == "success") {
         if (responseJson.posts) {
-          this.setState({'posts': responseJson.posts})
+          this.setState({'posts': responseJson.posts.reverse()})
           const _this = this;
           responseJson.posts.map(function(post, i) {
             if (!_this.state['userForPost' + post.Id]) {
@@ -166,7 +166,7 @@ export default class LoggedIn_landing extends React.Component {
       <Image source={require('../img/flock_logo.png')} style={{width: 120, height: 80}}/>
       <ScrollView style={styles.scrollContainer}>
 
-      {this.state.posts.reverse().map(function(post, i) {
+      {this.state.posts.map(function(post, i) {
         return (
           <View style={styles.card} title={post.Title}>
 
