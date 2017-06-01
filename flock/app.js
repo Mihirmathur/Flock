@@ -137,17 +137,41 @@ class HomeScreen extends React.Component {
         }}
         onLoginNotFound={function(){
           console.log("No user logged in.");
+          try {
+            console.log("Deleting token")
+            AsyncStorage.setItem('token', '');
+          } catch (error) {
+            console.log(error)
+          }
         }}
         onError={function(data){
           console.log("ERROR");
           console.log(data);
+          try {
+            console.log("Deleting token")
+            AsyncStorage.setItem('token', '');
+          } catch (error) {
+            console.log(error)
+          }
         }}
         onCancel={function(){
           console.log("User cancelled.");
+          try {
+            console.log("Deleting token")
+            AsyncStorage.setItem('token', '');
+          } catch (error) {
+            console.log(error)
+          }
         }}
         onPermissionsMissing={function(data){
           console.log("Check permissions!");
           console.log(data);
+          try {
+            console.log("Deleting token")
+            AsyncStorage.setItem('token', '');
+          } catch (error) {
+            console.log(error)
+          }
         }}
       />
 
