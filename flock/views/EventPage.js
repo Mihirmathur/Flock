@@ -208,8 +208,8 @@ export default class EventPage extends React.Component {
     var attendeesButtonTitle = 'Attendee List (' + this.state.attendees.length + ')';
     console.log("THIS IS THE VALUE OF ATTENDING AT TIME OF RENDER:" + this.state.attending)
     return (
-      <View style={styles.eventContainer}>
-      <Text style={styles.eventTitle}>{this.props.navigation.state.params.post.Title}</Text>
+      <View style={styles.card}>
+      <Text style={styles.titleCenter}>{this.props.navigation.state.params.post.Title}</Text>
       <Text style={{fontSize:14}}>{this.props.navigation.state.params.post.Description}</Text>
 
       <MapView
@@ -228,26 +228,26 @@ export default class EventPage extends React.Component {
 
       </MapView>
 
-          <Button backgroundColor='green' 
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+          <Button backgroundColor='#03A9F4' 
+          buttonStyle={{borderRadius: 20, width: 150, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
               title={attendeesButtonTitle}
               onPress={()=>navigate('AttendeeList', {'attendees': this.state.attendees})} />
 
           {this.state.attending == false ?
               <Button backgroundColor='#03A9F4' 
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+          buttonStyle={{borderRadius: 20, width: 150, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
               title='Join this Flock!' 
               onPress={this.createNewAttendee} /> :
 
-              <Button backgroundColor='#03A9F4' 
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+              <Button backgroundColor='#D64646' 
+          buttonStyle={{borderRadius: 20, width: 150, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
               title='Leave this Flock!' 
               onPress={this.removeAttendance} /> 
             }
 
           {this.state.profile && this.state.profile.Id == this.props.navigation.state.params.post.User_id &&
-            <Button backgroundColor='#AA5555' 
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+            <Button backgroundColor='#BC1A1A' 
+          buttonStyle={{borderRadius: 20, width: 150, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
               title='Delete this Flock!' 
               onPress={this.deletePost} /> 
           }

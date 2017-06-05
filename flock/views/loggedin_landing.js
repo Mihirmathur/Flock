@@ -125,13 +125,13 @@ export default class LoggedIn_landing extends React.Component {
           const _this = this;
           responseJson.posts.map(function(post, i) {
             if (!_this.state['userForPost' + post.Id]) {
-            console.log(post.Id);
-            fetch('https://flock-site-api.herokuapp.com/users/' + post.User_id, {
-              method: 'GET',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              }}).then((response) => response.json())
+              console.log(post.Id);
+              fetch('https://flock-site-api.herokuapp.com/users/' + post.User_id, {
+                method: 'GET',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }}).then((response) => response.json())
               .then((responseJson) => {
                 if (responseJson.status == "success") {
                   if (responseJson.user) {
@@ -172,43 +172,46 @@ export default class LoggedIn_landing extends React.Component {
 
           <Text style={styles.title}>{post.Title}</Text>
 
-           <View
-          style={{
-            borderBottomColor: '#F4EEF0',
-            borderBottomWidth: 1,
-            marginTop:2,
-            marginBottom: 4
-          }}
-          />
+         
 
-          {_this.state['userForPost' + post.Id] && 
-            <TouchableHighlight underlayColor="white" onPress={() => _this.props.navigation.navigate('ProfileView', {'user': _this.state['userForPost' + post.Id], 'fb_user': _this.state['userForPost' + post.Id].Fb_id})}>
-              <View>
-                <Text>
-                  <Image style={{width: 64, height: 64, borderRadius: 32}} source={{uri: "https://graph.facebook.com/" + _this.state['userForPost' + post.Id].Fb_id + "/picture?width=160&height=160" }} />
-                </Text>
-              </View>
-            </TouchableHighlight>
-          }
-          
-          <Text style={styles.description}>
-          Location: {post.Location}
-          </Text>
-          
-          <Text style={styles.description}>
-          {post.Description}
-          </Text>
-          
-          <TimeAgo style={styles.description} time={post.Time_created} />
-          
-          <Button backgroundColor='#03A9F4' 
-          buttonStyle={{borderRadius: 20, width: 130, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-          title='View Flock!' 
-          onPress={()=>navigate('EventView', {'post': post})}
-          />
+
+        <View
+        style={{
+          borderBottomColor: '#F4EEF0',
+          borderBottomWidth: 1,
+          marginTop:2,
+          marginBottom: 4
+        }}
+        />
+
+         {_this.state['userForPost' + post.Id] && 
+          <TouchableHighlight underlayColor="white" onPress={() => _this.props.navigation.navigate('ProfileView', {'user': _this.state['userForPost' + post.Id], 'fb_user': _this.state['userForPost' + post.Id].Fb_id})}>
+          <View>
+          <Image style={{width: 64, height: 64, borderRadius: 32, marginTop: 10, marginBottom: 10}} source={{uri: "https://graph.facebook.com/" + _this.state['userForPost' + post.Id].Fb_id + "/picture?width=160&height=160" }} />
 
           </View>
-          );
+          </TouchableHighlight>
+        }
+
+
+        <Text style={styles.description}>
+        Location: {post.Location}
+        </Text>
+
+        <Text style={styles.description}>
+        {post.Description}
+        </Text>
+
+        <TimeAgo style={styles.description} time={post.Time_created} />
+
+        <Button backgroundColor='#03A9F4' 
+        buttonStyle={{borderRadius: 20, width: 130, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+        title='View Flock!' 
+        onPress={()=>navigate('EventView', {'post': post})}
+        />
+
+        </View>
+        );
       })}
 
       </ScrollView>
@@ -227,5 +230,5 @@ export default class LoggedIn_landing extends React.Component {
 
       </View>
       );
+    }
   }
-}

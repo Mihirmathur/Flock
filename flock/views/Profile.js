@@ -74,17 +74,17 @@ export default class Profile extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <View style={styles.cardCenter}>
 
-      <Image style={{width: 128, height: 128, borderRadius: 64}} source={{uri: "https://graph.facebook.com/" + this.state.fb_user + "/picture?width=160&height=160" }} />
+      <Image style={{width: 150, height: 150, borderRadius: 75, paddingTop: 100, margin: 20}} source={{uri: "https://graph.facebook.com/" + this.state.fb_user + "/picture?width=160&height=160" }} />
 
-      <Text style={{marginTop: 10}}>{this.state.user.First_name} {this.state.user.Last_name}</Text>
+      <Text style={styles.title}>{this.state.user.First_name} {this.state.user.Last_name}</Text>
 
       <ScrollView>
 
       {this.state.posts.reverse().map(function(post, i) {
         return (
-          <Card title={post.Title}>
+          <View style={styles.card} title={post.Title}>
             <Text style={{marginBottom: 10}}>
               Location: {post.Location}
             </Text>
@@ -97,7 +97,7 @@ export default class Profile extends React.Component {
             title='View this Flock!' 
             onPress={()=>navigate('EventView', {'post': post})}
             />
-          </Card>
+          </View>
         );
       })}
 

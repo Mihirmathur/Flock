@@ -38,11 +38,38 @@ export const styles = StyleSheet.create({
     shadowColor: "#F4EEF0",
     shadowOpacity: .8,
     shadowRadius: 5,
-    borderColor: "#E4E1E2"
+    borderColor: "#E4E1E2",
+    backgroundColor: "white"
+  },
+  cardCenter:{
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 20,
+    flex: 1,
+    shadowColor: "#F4EEF0",
+    shadowOpacity: .8,
+    shadowRadius: 5,
+    borderColor: "#E4E1E2",
+    backgroundColor: "white",
+    justifyContent: 'center',
+    flexDirection: 'column',
+    textAlign: "center",
+    alignItems: 'center',
+  },
+  row:{
+    flex: 1, 
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   },
   title:{
     fontSize: 16,
     fontFamily: 'Avenir-Medium'
+  },
+  titleCenter:{
+    fontSize: 16,
+    fontFamily: 'Avenir-Medium',
+    textAlign: "center"
   },
   description:{
     fontSize: 12,
@@ -87,6 +114,7 @@ export const styles = StyleSheet.create({
   map: {
     height: 300,
     width: 300,
+    margin: 10
   },
   mapFull: {
     position: 'absolute',

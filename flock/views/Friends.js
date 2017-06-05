@@ -74,9 +74,10 @@ export default class Friends extends React.Component {
           state.params.friends.map(function(friend){
             return(
               <TouchableHighlight onPress={() => _this.profile(friend)}>
-                <View>
-                  <Text>
-                    <Image style={{width: 40, height: 40, borderRadius: 15}} source={{uri: "https://graph.facebook.com/" + friend.id + "/picture?width=100&height=100" }} />
+                <View style={styles.cardCenter}>
+                  
+                    <Image style={{width: 60, height: 60, borderRadius: 30, marginBottom: 10}} source={{uri: "https://graph.facebook.com/" + friend.id + "/picture?width=100&height=100" }} />
+                  <Text style={styles.title}>  
                     {`${friend.name}`}
                   </Text>
                 </View>
