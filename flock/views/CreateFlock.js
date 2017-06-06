@@ -97,7 +97,7 @@ export default class CreateFlock extends React.Component {
     API_KEY=GMAPS_AUTH;
     console.log(API_KEY);
     return (
-      <View style={styles.card}>
+      <View style={styles.createCard}>
       <Text style={styles.titleCenter}>Create a Flock!</Text>
 
       <FormLabel >Title</FormLabel>
@@ -109,8 +109,7 @@ export default class CreateFlock extends React.Component {
       <FormLabel>Location</FormLabel>
       <FormInput onChangeText={(location) => this.setState({location})} autoCapitalize='none'/>
 
-      <View style={{marginBottom:60}}>
-       <FormLabel style={{marginBottom: 20}}> Search for address </FormLabel>
+       <FormLabel style={{marginBottom: 15}}> Search for address </FormLabel>
 
        <GooglePlacesAutocomplete
        
@@ -174,9 +173,8 @@ export default class CreateFlock extends React.Component {
 
         debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
       />
-      </View>
 
-      <Button
+       <Button
       backgroundColor='#03A9F4' 
           buttonStyle={{borderRadius: 20, width: 130, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginLeft: 0, marginRight: 0, marginBottom: 0}} 
        onPress={() => {
@@ -207,6 +205,7 @@ export default class CreateFlock extends React.Component {
           }
         });
       }} title="Create Flock" />
+     
 
       </View>
       );

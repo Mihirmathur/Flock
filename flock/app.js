@@ -23,6 +23,9 @@ import AttendeeListPage from './views/AttendeeListPage'
 import Friends from './views/Friends'
 import Map from './views/Map'
 
+console.disableYellowBox = true;
+
+
 //Home Screen
 class HomeScreen extends React.Component {
 

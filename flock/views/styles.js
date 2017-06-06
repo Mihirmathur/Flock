@@ -41,6 +41,19 @@ export const styles = StyleSheet.create({
     borderColor: "#E4E1E2",
     backgroundColor: "white"
   },
+  createCard:{
+    flex: 1,
+    borderWidth: 1,
+    borderRadius:2,
+    margin: 8,
+    padding: 20,
+    marginBottom:10,
+    shadowColor: "#F4EEF0",
+    shadowOpacity: .8,
+    shadowRadius: 5,
+    borderColor: "#E4E1E2",
+    backgroundColor: "white"
+  },
   cardCenter:{
     borderWidth: 1,
     borderRadius: 5,
@@ -85,7 +98,6 @@ export const styles = StyleSheet.create({
     marginTop:2,
     marginBottom:2,
     fontFamily: 'Avenir-Light'
-
   },
 
   mapFullContainer: {
