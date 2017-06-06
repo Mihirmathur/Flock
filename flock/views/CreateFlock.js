@@ -109,11 +109,11 @@ export default class CreateFlock extends React.Component {
       <FormLabel>Location</FormLabel>
       <FormInput onChangeText={(location) => this.setState({location})} autoCapitalize='none'/>
 
-
+      <View style={{marginBottom:60}}>
        <FormLabel style={{marginBottom: 20}}> Search for address </FormLabel>
 
        <GooglePlacesAutocomplete
-       style={{marginBottom: 40}}
+       
         placeholder='Search'
         minLength={1} // minimum length of text to search
         autoFocus={false}
@@ -174,10 +174,11 @@ export default class CreateFlock extends React.Component {
 
         debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
       />
+      </View>
 
       <Button
       backgroundColor='#03A9F4' 
-          buttonStyle={{borderRadius: 20, width: 130, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginTop: 60, marginLeft: 0, marginRight: 0, marginBottom: 0}} 
+          buttonStyle={{borderRadius: 20, width: 130, height: 30, fontFamily: 'Avenir-Light', fontSize: 10, marginLeft: 0, marginRight: 0, marginBottom: 0}} 
        onPress={() => {
         AsyncStorage.getItem('token').then((value) => {
           if (value) {
